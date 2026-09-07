@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { formatPriceRange, type Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/my-products")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "My products — ArtisanLink" },

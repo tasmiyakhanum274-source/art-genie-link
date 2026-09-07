@@ -19,6 +19,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { CATEGORIES, LANGUAGES } from "@/lib/artisan";
 
 export const Route = createFileRoute("/settings")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Profile settings — ArtisanLink" },

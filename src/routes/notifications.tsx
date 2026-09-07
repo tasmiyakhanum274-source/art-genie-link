@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/notifications")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Notifications — ArtisanLink" },
