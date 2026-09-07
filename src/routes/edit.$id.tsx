@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import type { Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/edit/$id")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Edit product — ArtisanLink" },

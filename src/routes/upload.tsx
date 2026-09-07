@@ -15,6 +15,7 @@ import { generateCatalog, type CatalogResult } from "@/lib/catalog.functions";
 import { fileToDataUrl, formatPriceRange } from "@/lib/artisan";
 
 export const Route = createFileRoute("/upload")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Add a product with AI — ArtisanLink" },

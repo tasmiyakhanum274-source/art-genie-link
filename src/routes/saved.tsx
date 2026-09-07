@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import type { Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/saved")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Saved products — ArtisanLink" },
