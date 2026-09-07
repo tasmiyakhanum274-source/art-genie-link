@@ -109,7 +109,7 @@ function SettingsPage() {
           <div className="space-y-2">
             <Label htmlFor="craft">Craft speciality</Label>
             <Select
-              value={form.craft_specialty || undefined}
+              value={form.craft_specialty}
               onValueChange={(value) => setForm({ ...form, craft_specialty: value })}
             >
               <SelectTrigger id="craft">
