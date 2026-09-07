@@ -13,6 +13,15 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ArtisansRouteImport } from './routes/artisans'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as MyProductsRouteImport } from './routes/my-products'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as SavedRouteImport } from './routes/saved'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as UploadRouteImport } from './routes/upload'
+import { Route as ArtisanIdRouteImport } from './routes/artisan.$id'
+import { Route as EditIdRouteImport } from './routes/edit.$id'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +43,81 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyProductsRoute = MyProductsRouteImport.update({
+  id: '/my-products',
+  path: '/my-products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtisanIdRoute = ArtisanIdRouteImport.update({
+  id: '/artisan/$id',
+  path: '/artisan/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditIdRoute = EditIdRouteImport.update({
+  id: '/edit/$id',
+  path: '/edit/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/my-products': typeof MyProductsRoute
+  '/notifications': typeof NotificationsRoute
+  '/saved': typeof SavedRoute
+  '/settings': typeof SettingsRoute
+  '/upload': typeof UploadRoute
+  '/artisan/$id': typeof ArtisanIdRoute
+  '/edit/$id': typeof EditIdRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/my-products': typeof MyProductsRoute
+  '/notifications': typeof NotificationsRoute
+  '/saved': typeof SavedRoute
+  '/settings': typeof SettingsRoute
+  '/upload': typeof UploadRoute
+  '/artisan/$id': typeof ArtisanIdRoute
+  '/edit/$id': typeof EditIdRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +125,62 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/my-products': typeof MyProductsRoute
+  '/notifications': typeof NotificationsRoute
+  '/saved': typeof SavedRoute
+  '/settings': typeof SettingsRoute
+  '/upload': typeof UploadRoute
+  '/artisan/$id': typeof ArtisanIdRoute
+  '/edit/$id': typeof EditIdRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/artisans' | '/auth'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/artisans'
+    | '/auth'
+    | '/dashboard'
+    | '/my-products'
+    | '/notifications'
+    | '/saved'
+    | '/settings'
+    | '/upload'
+    | '/artisan/$id'
+    | '/edit/$id'
+    | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/artisans' | '/auth'
-  id: '__root__' | '/' | '/about' | '/artisans' | '/auth'
+  to:
+    | '/'
+    | '/about'
+    | '/artisans'
+    | '/auth'
+    | '/dashboard'
+    | '/my-products'
+    | '/notifications'
+    | '/saved'
+    | '/settings'
+    | '/upload'
+    | '/artisan/$id'
+    | '/edit/$id'
+    | '/product/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/artisans'
+    | '/auth'
+    | '/dashboard'
+    | '/my-products'
+    | '/notifications'
+    | '/saved'
+    | '/settings'
+    | '/upload'
+    | '/artisan/$id'
+    | '/edit/$id'
+    | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +188,15 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ArtisansRoute: typeof ArtisansRoute
   AuthRoute: typeof AuthRoute
+  DashboardRoute: typeof DashboardRoute
+  MyProductsRoute: typeof MyProductsRoute
+  NotificationsRoute: typeof NotificationsRoute
+  SavedRoute: typeof SavedRoute
+  SettingsRoute: typeof SettingsRoute
+  UploadRoute: typeof UploadRoute
+  ArtisanIdRoute: typeof ArtisanIdRoute
+  EditIdRoute: typeof EditIdRoute
+  ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +229,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-products': {
+      id: '/my-products'
+      path: '/my-products'
+      fullPath: '/my-products'
+      preLoaderRoute: typeof MyProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artisan/$id': {
+      id: '/artisan/$id'
+      path: '/artisan/$id'
+      fullPath: '/artisan/$id'
+      preLoaderRoute: typeof ArtisanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit/$id': {
+      id: '/edit/$id'
+      path: '/edit/$id'
+      fullPath: '/edit/$id'
+      preLoaderRoute: typeof EditIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +300,15 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ArtisansRoute: ArtisansRoute,
   AuthRoute: AuthRoute,
+  DashboardRoute: DashboardRoute,
+  MyProductsRoute: MyProductsRoute,
+  NotificationsRoute: NotificationsRoute,
+  SavedRoute: SavedRoute,
+  SettingsRoute: SettingsRoute,
+  UploadRoute: UploadRoute,
+  ArtisanIdRoute: ArtisanIdRoute,
+  EditIdRoute: EditIdRoute,
+  ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
