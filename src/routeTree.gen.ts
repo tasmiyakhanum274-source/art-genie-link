@@ -13,6 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ArtisansRouteImport } from './routes/artisans'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ArtisanIdRouteImport } from './routes/artisan.$id'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +37,39 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtisanIdRoute = ArtisanIdRouteImport.update({
+  id: '/artisan/$id',
+  path: '/artisan/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/artisan/$id': typeof ArtisanIdRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/artisan/$id': typeof ArtisanIdRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +77,38 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/artisan/$id': typeof ArtisanIdRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/artisans' | '/auth'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/artisans'
+    | '/auth'
+    | '/dashboard'
+    | '/artisan/$id'
+    | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/artisans' | '/auth'
-  id: '__root__' | '/' | '/about' | '/artisans' | '/auth'
+  to:
+    | '/'
+    | '/about'
+    | '/artisans'
+    | '/auth'
+    | '/dashboard'
+    | '/artisan/$id'
+    | '/product/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/artisans'
+    | '/auth'
+    | '/dashboard'
+    | '/artisan/$id'
+    | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +116,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ArtisansRoute: typeof ArtisansRoute
   AuthRoute: typeof AuthRoute
+  DashboardRoute: typeof DashboardRoute
+  ArtisanIdRoute: typeof ArtisanIdRoute
+  ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +151,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artisan/$id': {
+      id: '/artisan/$id'
+      path: '/artisan/$id'
+      fullPath: '/artisan/$id'
+      preLoaderRoute: typeof ArtisanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ArtisansRoute: ArtisansRoute,
   AuthRoute: AuthRoute,
+  DashboardRoute: DashboardRoute,
+  ArtisanIdRoute: ArtisanIdRoute,
+  ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
