@@ -68,12 +68,12 @@ export function AppHeader() {
           {user ? (
             <>
               <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
-                <Link to="/notifications" aria-label="Notifications">
+                <Link to="/notifications" aria-label={t("nav.notifications")}>
                   <Bell className="h-5 w-5" />
                 </Link>
               </Button>
               <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
-                <Link to="/saved" aria-label="Saved products">
+                <Link to="/saved" aria-label={t("nav.saved")}>
                   <Heart className="h-5 w-5" />
                 </Link>
               </Button>
@@ -90,33 +90,33 @@ export function AppHeader() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link to="/dashboard">
-                      <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
+                      <LayoutDashboard className="mr-2 h-4 w-4" /> {t("nav.dashboard")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/upload">
-                      <Plus className="mr-2 h-4 w-4" /> Add product
+                      <Plus className="mr-2 h-4 w-4" /> {t("nav.addProduct")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/my-products">My products</Link>
+                    <Link to="/my-products">{t("nav.myProducts")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/saved">Saved</Link>
+                    <Link to="/saved">{t("nav.saved")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/settings">Settings</Link>
+                    <Link to="/settings">{t("nav.settings")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="mr-2 h-4 w-4" /> Sign out
+                    <LogOut className="mr-2 h-4 w-4" /> {t("nav.signOut")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
           ) : (
             <Button asChild variant="default" className="bg-gradient-warm border-0">
-              <Link to="/auth">Sign in</Link>
+              <Link to="/auth">{t("nav.signIn")}</Link>
             </Button>
           )}
 
