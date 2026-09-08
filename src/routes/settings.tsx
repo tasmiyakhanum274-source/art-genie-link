@@ -74,16 +74,17 @@ function SettingsPage() {
       return;
     }
     await refreshProfile();
-    toast.success("Profile updated");
+    setLanguage(form.preferred_language as LanguageCode);
+    toast.success(t("settings.saved"));
   };
 
   return (
     <PageShell>
-      <h1 className="text-3xl font-semibold">Profile settings</h1>
+      <h1 className="text-3xl font-semibold">{t("settings.title")}</h1>
 
       <div className="card-surface mt-6 space-y-4 p-6">
         <div className="space-y-2">
-          <Label htmlFor="name">Full name</Label>
+          <Label htmlFor="name">{t("settings.name")}</Label>
           <Input
             id="name"
             value={form.full_name}
@@ -92,7 +93,7 @@ function SettingsPage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone</Label>
+            <Label htmlFor="phone">{t("settings.phone")}</Label>
             <Input
               id="phone"
               value={form.phone}
@@ -100,7 +101,7 @@ function SettingsPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="location">Village or city</Label>
+            <Label htmlFor="location">{t("settings.location")}</Label>
             <Input
               id="location"
               value={form.location}
@@ -110,13 +111,13 @@ function SettingsPage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="craft">Craft speciality</Label>
+            <Label htmlFor="craft">{t("settings.craft")}</Label>
             <Select
               value={form.craft_specialty}
               onValueChange={(value) => setForm({ ...form, craft_specialty: value })}
             >
               <SelectTrigger id="craft">
-                <SelectValue placeholder="Choose your craft" />
+                <SelectValue placeholder={t("settings.craftPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
                 {CATEGORIES.map((category) => (
@@ -128,10 +129,13 @@ function SettingsPage() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="language">Preferred language</Label>
+            <Label htmlFor="language">{t("settings.language")}</Label>
             <Select
               value={form.preferred_language}
-              onValueChange={(value) => setForm({ ...form, preferred_language: value })}
+              onValueChange={(value) => {
+                setForm({ ...form, preferred_language: value });
+                setLanguage(value as LanguageCode);
+              }}
             >
               <SelectTrigger id="language">
                 <SelectValue />
@@ -147,17 +151,17 @@ function SettingsPage() {
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="bio">About you</Label>
+          <Label htmlFor="bio">{t("settings.bio")}</Label>
           <Textarea
             id="bio"
             rows={4}
             value={form.bio}
             onChange={(e) => setForm({ ...form, bio: e.target.value })}
-            placeholder="Your craft tradition, years of experience, your family workshop..."
+            placeholder={t("settings.bioPlaceholder")}
           />
         </div>
         <Button disabled={saving} onClick={() => void save()}>
-          {saving ? "Saving..." : "Save profile"}
+          {saving ? t("settings.saving") : t("settings.save")}
         </Button>
       </div>
     </PageShell>
