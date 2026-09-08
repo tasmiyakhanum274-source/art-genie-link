@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/lib/i18n";
 import { formatPriceRange, type Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/my-products")({
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/my-products")({
 
 function MyProductsPage() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -56,7 +58,7 @@ function MyProductsPage() {
       toast.error(error.message);
       return;
     }
-    toast.success("Product removed");
+    toast.success(t("mine.removed"));
     void queryClient.invalidateQueries({ queryKey: ["my-products", user?.id] });
   };
 
@@ -73,10 +75,10 @@ function MyProductsPage() {
   return (
     <PageShell>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold">My products</h1>
+        <h1 className="text-3xl font-semibold">{t("mine.title")}</h1>
         <Button asChild>
           <Link to="/upload">
-            <Plus className="mr-2 h-4 w-4" aria-hidden /> Add a product
+            <Plus className="mr-2 h-4 w-4" aria-hidden /> {t("dash.addProduct")}
           </Link>
         </Button>
       </div>
@@ -89,7 +91,7 @@ function MyProductsPage() {
         </div>
       ) : (data?.length ?? 0) === 0 ? (
         <p className="card-surface text-muted-foreground mt-8 p-10 text-center">
-          Nothing listed yet.
+          {t("mine.empty")}
         </p>
       ) : (
         <div className="mt-8 space-y-3">
@@ -117,7 +119,7 @@ function MyProductsPage() {
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={() => void toggleStatus(product)}>
-                  {product.status === "published" ? "Unpublish" : "Publish"}
+                  {product.status === "published" ? t("mine.unpublish") : t("mine.publish")}
                 </Button>
                 <Button asChild variant="outline" size="sm">
                   <Link to="/edit/$id" params={{ id: product.id }}>

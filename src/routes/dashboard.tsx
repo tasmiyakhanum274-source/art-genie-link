@@ -8,6 +8,7 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/lib/i18n";
 import type { Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/dashboard")({
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/dashboard")({
 
 function DashboardPage() {
   const { user, profile } = useAuth();
+  const { t } = useLanguage();
 
   const { data, isLoading } = useQuery({
     queryKey: ["dashboard", user?.id],
@@ -67,10 +69,10 @@ function DashboardPage() {
   });
 
   const stats = [
-    { label: "Products", value: data?.products.length ?? 0, icon: Package },
-    { label: "Total views", value: data?.views ?? 0, icon: Eye },
-    { label: "Buyer interest", value: data?.interest ?? 0, icon: Heart },
-    { label: "Unread alerts", value: data?.unread ?? 0, icon: Bell },
+    { label: t("dash.products"), value: data?.products.length ?? 0, icon: Package },
+    { label: t("dash.views"), value: data?.views ?? 0, icon: Eye },
+    { label: t("dash.interest"), value: data?.interest ?? 0, icon: Heart },
+    { label: t("dash.unread"), value: data?.unread ?? 0, icon: Bell },
   ];
 
   return (
@@ -78,15 +80,14 @@ function DashboardPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-semibold">
-            Namaste{profile?.full_name ? `, ${profile.full_name}` : ""}
+            {t("dash.greeting")}
+            {profile?.full_name ? `, ${profile.full_name}` : ""}
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Photograph a product and the AI writes the listing for you.
-          </p>
+          <p className="text-muted-foreground mt-1">{t("dash.subtitle")}</p>
         </div>
         <Button asChild>
           <Link to="/upload">
-            <Plus className="mr-2 h-4 w-4" aria-hidden /> Add a product
+            <Plus className="mr-2 h-4 w-4" aria-hidden /> {t("dash.addProduct")}
           </Link>
         </Button>
       </div>
@@ -102,9 +103,9 @@ function DashboardPage() {
       </div>
 
       <div className="mt-10 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Your latest listings</h2>
+        <h2 className="text-xl font-semibold">{t("dash.latest")}</h2>
         <Button asChild variant="ghost" size="sm">
-          <Link to="/my-products">Manage all</Link>
+          <Link to="/my-products">{t("dash.manageAll")}</Link>
         </Button>
       </div>
 
@@ -116,9 +117,9 @@ function DashboardPage() {
         </div>
       ) : (data?.products.length ?? 0) === 0 ? (
         <div className="card-surface mt-4 p-10 text-center">
-          <p className="text-muted-foreground">You have not listed anything yet.</p>
+          <p className="text-muted-foreground">{t("dash.empty")}</p>
           <Button asChild className="mt-4">
-            <Link to="/upload">Upload your first product photo</Link>
+            <Link to="/upload">{t("dash.emptyCta")}</Link>
           </Button>
         </div>
       ) : (

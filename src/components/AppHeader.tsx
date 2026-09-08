@@ -14,15 +14,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useLanguage, type TranslationKey } from "@/lib/i18n";
 
 const publicLinks = [
-  { to: "/", label: "Marketplace" },
-  { to: "/artisans", label: "Artisans" },
-  { to: "/about", label: "How it works" },
-] as const;
+  { to: "/", labelKey: "nav.marketplace" },
+  { to: "/artisans", labelKey: "nav.artisans" },
+  { to: "/about", labelKey: "nav.about" },
+] as const satisfies ReadonlyArray<{ to: string; labelKey: TranslationKey }>;
 
 export function AppHeader() {
   const { user, profile } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
@@ -55,21 +58,22 @@ export function AppHeader() {
               activeProps={{ className: "text-foreground bg-secondary" }}
               activeOptions={{ exact: link.to === "/" }}
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           {user ? (
             <>
               <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
-                <Link to="/notifications" aria-label="Notifications">
+                <Link to="/notifications" aria-label={t("nav.notifications")}>
                   <Bell className="h-5 w-5" />
                 </Link>
               </Button>
               <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
-                <Link to="/saved" aria-label="Saved products">
+                <Link to="/saved" aria-label={t("nav.saved")}>
                   <Heart className="h-5 w-5" />
                 </Link>
               </Button>
@@ -86,33 +90,33 @@ export function AppHeader() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link to="/dashboard">
-                      <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
+                      <LayoutDashboard className="mr-2 h-4 w-4" /> {t("nav.dashboard")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/upload">
-                      <Plus className="mr-2 h-4 w-4" /> Add product
+                      <Plus className="mr-2 h-4 w-4" /> {t("nav.addProduct")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/my-products">My products</Link>
+                    <Link to="/my-products">{t("nav.myProducts")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/saved">Saved</Link>
+                    <Link to="/saved">{t("nav.saved")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/settings">Settings</Link>
+                    <Link to="/settings">{t("nav.settings")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="mr-2 h-4 w-4" /> Sign out
+                    <LogOut className="mr-2 h-4 w-4" /> {t("nav.signOut")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
           ) : (
             <Button asChild variant="default" className="bg-gradient-warm border-0">
-              <Link to="/auth">Sign in</Link>
+              <Link to="/auth">{t("nav.signIn")}</Link>
             </Button>
           )}
 
@@ -131,7 +135,7 @@ export function AppHeader() {
                     onClick={() => setOpen(false)}
                     className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 ))}
                 {user && (
@@ -141,21 +145,21 @@ export function AppHeader() {
                       onClick={() => setOpen(false)}
                       className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
                     >
-                      Dashboard
+                      {t("nav.dashboard")}
                     </Link>
                     <Link
                       to="/upload"
                       onClick={() => setOpen(false)}
                       className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
                     >
-                      Add product
+                      {t("nav.addProduct")}
                     </Link>
                     <Link
                       to="/notifications"
                       onClick={() => setOpen(false)}
                       className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
                     >
-                      Notifications
+                      {t("nav.notifications")}
                     </Link>
                   </>
                 )}
