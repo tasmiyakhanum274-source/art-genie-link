@@ -41,6 +41,7 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsPage() {
   const { user, profile, refreshProfile } = useAuth();
+  const { t, setLanguage } = useLanguage();
   const [form, setForm] = useState({
     full_name: "",
     phone: "",
