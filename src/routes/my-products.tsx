@@ -119,7 +119,7 @@ function MyProductsPage() {
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={() => void toggleStatus(product)}>
-                  {product.status === "published" ? "Unpublish" : "Publish"}
+                  {product.status === "published" ? t("mine.unpublish") : t("mine.publish")}
                 </Button>
                 <Button asChild variant="outline" size="sm">
                   <Link to="/edit/$id" params={{ id: product.id }}>
