@@ -75,10 +75,10 @@ function MyProductsPage() {
   return (
     <PageShell>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold">My products</h1>
+        <h1 className="text-3xl font-semibold">{t("mine.title")}</h1>
         <Button asChild>
           <Link to="/upload">
-            <Plus className="mr-2 h-4 w-4" aria-hidden /> Add a product
+            <Plus className="mr-2 h-4 w-4" aria-hidden /> {t("dash.addProduct")}
           </Link>
         </Button>
       </div>
@@ -91,7 +91,7 @@ function MyProductsPage() {
         </div>
       ) : (data?.length ?? 0) === 0 ? (
         <p className="card-surface text-muted-foreground mt-8 p-10 text-center">
-          Nothing listed yet.
+          {t("mine.empty")}
         </p>
       ) : (
         <div className="mt-8 space-y-3">
