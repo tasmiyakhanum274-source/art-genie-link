@@ -36,6 +36,7 @@ export const Route = createFileRoute("/dashboard")({
 
 function DashboardPage() {
   const { user, profile } = useAuth();
+  const { t } = useLanguage();
 
   const { data, isLoading } = useQuery({
     queryKey: ["dashboard", user?.id],
