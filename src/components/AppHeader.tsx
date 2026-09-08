@@ -135,7 +135,7 @@ export function AppHeader() {
                     onClick={() => setOpen(false)}
                     className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 ))}
                 {user && (
