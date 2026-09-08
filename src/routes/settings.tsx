@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
-import { CATEGORIES, LANGUAGES } from "@/lib/artisan";
+import { useLanguage } from "@/lib/i18n";
+import { CATEGORIES, LANGUAGES, type LanguageCode } from "@/lib/artisan";
 
 export const Route = createFileRoute("/settings")({
   ssr: false,
