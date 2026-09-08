@@ -58,7 +58,7 @@ function MyProductsPage() {
       toast.error(error.message);
       return;
     }
-    toast.success("Product removed");
+    toast.success(t("mine.removed"));
     void queryClient.invalidateQueries({ queryKey: ["my-products", user?.id] });
   };
 
