@@ -8,6 +8,7 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/lib/i18n";
 import type { Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/dashboard")({
