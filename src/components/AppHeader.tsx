@@ -58,12 +58,13 @@ export function AppHeader() {
               activeProps={{ className: "text-foreground bg-secondary" }}
               activeOptions={{ exact: link.to === "/" }}
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           {user ? (
             <>
               <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex">
