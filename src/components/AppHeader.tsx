@@ -14,15 +14,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useLanguage, type TranslationKey } from "@/lib/i18n";
 
 const publicLinks = [
-  { to: "/", label: "Marketplace" },
-  { to: "/artisans", label: "Artisans" },
-  { to: "/about", label: "How it works" },
-] as const;
+  { to: "/", labelKey: "nav.marketplace" },
+  { to: "/artisans", labelKey: "nav.artisans" },
+  { to: "/about", labelKey: "nav.about" },
+] as const satisfies ReadonlyArray<{ to: string; labelKey: TranslationKey }>;
 
 export function AppHeader() {
   const { user, profile } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
