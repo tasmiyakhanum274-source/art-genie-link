@@ -35,6 +35,7 @@ export const Route = createFileRoute("/my-products")({
 
 function MyProductsPage() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
