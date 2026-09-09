@@ -190,6 +190,52 @@ function MarketplacePage() {
             </Button>
           ))}
         </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground text-sm">Price ₹</span>
+            <Input
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value.replace(/[^\d]/g, ""))}
+              inputMode="numeric"
+              placeholder="Min"
+              aria-label="Minimum price in rupees"
+              className="h-10 w-24 rounded-xl"
+            />
+            <span className="text-muted-foreground text-sm">to ₹</span>
+            <Input
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value.replace(/[^\d]/g, ""))}
+              inputMode="numeric"
+              placeholder="Max"
+              aria-label="Maximum price in rupees"
+              className="h-10 w-24 rounded-xl"
+            />
+          </div>
+
+          <Select value={location} onValueChange={setLocation}>
+            <SelectTrigger className="h-10 w-56 rounded-xl" aria-label="Filter by location">
+              <SelectValue placeholder="All locations" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All locations</SelectItem>
+              {locations.map((loc) => (
+                <SelectItem key={loc} value={loc}>
+                  {loc}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {filtersActive && (
+            <Button variant="ghost" size="sm" onClick={clearFilters} className="rounded-full">
+              Clear filters
+            </Button>
+          )}
+          <span className="text-muted-foreground ml-auto text-sm">
+            {filtered.length} {filtered.length === 1 ? "product" : "products"}
+          </span>
+        </div>
       </section>
 
       {/* Grid */}
