@@ -102,6 +102,11 @@ export function AppHeader() {
                     <Link to="/my-products">{t("nav.myProducts")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
+                    <Link to="/buyer">
+                      <ShoppingBag className="mr-2 h-4 w-4" /> Buyer home
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/saved">{t("nav.saved")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>

@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ArtisansRouteImport } from './routes/artisans'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BuyerRouteImport } from './routes/buyer'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as MyProductsRouteImport } from './routes/my-products'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -41,6 +42,11 @@ const ArtisansRoute = ArtisansRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyerRoute = BuyerRouteImport.update({
+  id: '/buyer',
+  path: '/buyer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/buyer': typeof BuyerRoute
   '/dashboard': typeof DashboardRoute
   '/my-products': typeof MyProductsRoute
   '/notifications': typeof NotificationsRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/buyer': typeof BuyerRoute
   '/dashboard': typeof DashboardRoute
   '/my-products': typeof MyProductsRoute
   '/notifications': typeof NotificationsRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
   '/auth': typeof AuthRoute
+  '/buyer': typeof BuyerRoute
   '/dashboard': typeof DashboardRoute
   '/my-products': typeof MyProductsRoute
   '/notifications': typeof NotificationsRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/artisans'
     | '/auth'
+    | '/buyer'
     | '/dashboard'
     | '/my-products'
     | '/notifications'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/artisans'
     | '/auth'
+    | '/buyer'
     | '/dashboard'
     | '/my-products'
     | '/notifications'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/artisans'
     | '/auth'
+    | '/buyer'
     | '/dashboard'
     | '/my-products'
     | '/notifications'
@@ -188,6 +200,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ArtisansRoute: typeof ArtisansRoute
   AuthRoute: typeof AuthRoute
+  BuyerRoute: typeof BuyerRoute
   DashboardRoute: typeof DashboardRoute
   MyProductsRoute: typeof MyProductsRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -227,6 +240,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buyer': {
+      id: '/buyer'
+      path: '/buyer'
+      fullPath: '/buyer'
+      preLoaderRoute: typeof BuyerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -300,6 +320,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ArtisansRoute: ArtisansRoute,
   AuthRoute: AuthRoute,
+  BuyerRoute: BuyerRoute,
   DashboardRoute: DashboardRoute,
   MyProductsRoute: MyProductsRoute,
   NotificationsRoute: NotificationsRoute,
