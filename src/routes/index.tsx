@@ -34,6 +34,9 @@ function MarketplacePage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<"new" | "price-low" | "price-high">("new");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [location, setLocation] = useState<string>("all");
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["marketplace-products"],
