@@ -1,6 +1,15 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Bell, Heart, LayoutDashboard, LogOut, Menu, Palette, Plus } from "lucide-react";
+import {
+  Bell,
+  Heart,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Palette,
+  Plus,
+  ShoppingBag,
+} from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -158,6 +167,20 @@ export function AppHeader() {
                       className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
                     >
                       {t("nav.addProduct")}
+                    </Link>
+                    <Link
+                      to="/buyer"
+                      onClick={() => setOpen(false)}
+                      className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
+                    >
+                      Buyer home
+                    </Link>
+                    <Link
+                      to="/saved"
+                      onClick={() => setOpen(false)}
+                      className="hover:bg-secondary rounded-lg px-3 py-2 text-sm"
+                    >
+                      {t("nav.saved")}
                     </Link>
                     <Link
                       to="/notifications"
