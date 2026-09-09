@@ -64,11 +64,35 @@ function MarketplacePage() {
       );
     }
     if (category) list = list.filter((p) => p.category === category);
+    if (location !== "all") list = list.filter((p) => (p.location ?? "") === location);
+    const min = Number(minPrice);
+    const max = Number(maxPrice);
+    if (minPrice.trim() && Number.isFinite(min)) {
+      list = list.filter((p) => Number(p.price_max || p.price_min) >= min);
+    }
+    if (maxPrice.trim() && Number.isFinite(max)) {
+      list = list.filter((p) => Number(p.price_min) <= max);
+    }
     const sorted = [...list];
     if (sort === "price-low") sorted.sort((a, b) => Number(a.price_min) - Number(b.price_min));
     if (sort === "price-high") sorted.sort((a, b) => Number(b.price_max) - Number(a.price_max));
     return sorted;
-  }, [products, search, category, sort]);
+  }, [products, search, category, sort, location, minPrice, maxPrice]);
+
+  const locations = useMemo(() => {
+    const set = new Set((products ?? []).map((p) => p.location).filter(Boolean) as string[]);
+    return [...set].sort((a, b) => a.localeCompare(b));
+  }, [products]);
+
+  const filtersActive =
+    Boolean(category) || location !== "all" || minPrice.trim() !== "" || maxPrice.trim() !== "";
+
+  const clearFilters = () => {
+    setCategory(null);
+    setLocation("all");
+    setMinPrice("");
+    setMaxPrice("");
+  };
 
   return (
     <PageShell wide>
