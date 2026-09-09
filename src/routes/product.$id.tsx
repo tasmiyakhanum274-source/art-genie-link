@@ -268,6 +268,8 @@ function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      <RelatedProducts product={product} />
     </PageShell>
   );
 }
