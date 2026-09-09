@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RelatedProducts } from "@/components/RelatedProducts";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { LANGUAGES, formatPriceRange, type Product, type Profile, type Translation } from "@/lib/artisan";
@@ -267,6 +268,8 @@ function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      <RelatedProducts product={product} />
     </PageShell>
   );
 }

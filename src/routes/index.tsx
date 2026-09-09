@@ -8,6 +8,13 @@ import { ProductCard } from "@/components/ProductCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CATEGORIES, type Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/")({
@@ -34,6 +41,9 @@ function MarketplacePage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<"new" | "price-low" | "price-high">("new");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [location, setLocation] = useState<string>("all");
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["marketplace-products"],
@@ -61,11 +71,35 @@ function MarketplacePage() {
       );
     }
     if (category) list = list.filter((p) => p.category === category);
+    if (location !== "all") list = list.filter((p) => (p.location ?? "") === location);
+    const min = Number(minPrice);
+    const max = Number(maxPrice);
+    if (minPrice.trim() && Number.isFinite(min)) {
+      list = list.filter((p) => Number(p.price_max || p.price_min) >= min);
+    }
+    if (maxPrice.trim() && Number.isFinite(max)) {
+      list = list.filter((p) => Number(p.price_min) <= max);
+    }
     const sorted = [...list];
     if (sort === "price-low") sorted.sort((a, b) => Number(a.price_min) - Number(b.price_min));
     if (sort === "price-high") sorted.sort((a, b) => Number(b.price_max) - Number(a.price_max));
     return sorted;
-  }, [products, search, category, sort]);
+  }, [products, search, category, sort, location, minPrice, maxPrice]);
+
+  const locations = useMemo(() => {
+    const set = new Set((products ?? []).map((p) => p.location).filter(Boolean) as string[]);
+    return [...set].sort((a, b) => a.localeCompare(b));
+  }, [products]);
+
+  const filtersActive =
+    Boolean(category) || location !== "all" || minPrice.trim() !== "" || maxPrice.trim() !== "";
+
+  const clearFilters = () => {
+    setCategory(null);
+    setLocation("all");
+    setMinPrice("");
+    setMaxPrice("");
+  };
 
   return (
     <PageShell wide>
@@ -162,6 +196,52 @@ function MarketplacePage() {
               {c}
             </Button>
           ))}
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground text-sm">Price ₹</span>
+            <Input
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value.replace(/[^\d]/g, ""))}
+              inputMode="numeric"
+              placeholder="Min"
+              aria-label="Minimum price in rupees"
+              className="h-10 w-24 rounded-xl"
+            />
+            <span className="text-muted-foreground text-sm">to ₹</span>
+            <Input
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value.replace(/[^\d]/g, ""))}
+              inputMode="numeric"
+              placeholder="Max"
+              aria-label="Maximum price in rupees"
+              className="h-10 w-24 rounded-xl"
+            />
+          </div>
+
+          <Select value={location} onValueChange={setLocation}>
+            <SelectTrigger className="h-10 w-56 rounded-xl" aria-label="Filter by location">
+              <SelectValue placeholder="All locations" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All locations</SelectItem>
+              {locations.map((loc) => (
+                <SelectItem key={loc} value={loc}>
+                  {loc}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {filtersActive && (
+            <Button variant="ghost" size="sm" onClick={clearFilters} className="rounded-full">
+              Clear filters
+            </Button>
+          )}
+          <span className="text-muted-foreground ml-auto text-sm">
+            {filtered.length} {filtered.length === 1 ? "product" : "products"}
+          </span>
         </div>
       </section>
 
