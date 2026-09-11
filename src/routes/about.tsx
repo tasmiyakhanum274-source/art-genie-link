@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera, Sparkles, Languages, IndianRupee, Store, BellRing } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -23,48 +24,22 @@ export const Route = createFileRoute("/about")({
 });
 
 const steps = [
-  {
-    icon: Camera,
-    title: "Photograph the craft",
-    body: "The artisan takes one clear photo on any phone. No typing, no forms, no English needed.",
-  },
-  {
-    icon: Sparkles,
-    title: "AI reads the product",
-    body: "Vision AI identifies the craft, materials and technique, then writes a market-ready title, description, category and search tags.",
-  },
-  {
-    icon: IndianRupee,
-    title: "Fair price guidance",
-    body: "A price range is estimated from craft type, materials, complexity, size, labour and region — so nobody undersells their work.",
-  },
-  {
-    icon: Languages,
-    title: "Four languages",
-    body: "Every listing is stored in English, Hindi, Kannada and Tamil so artisans read it in their language and buyers search in theirs.",
-  },
-  {
-    icon: Store,
-    title: "Buyers discover it",
-    body: "Listings appear in the marketplace with search, category filters and artisan profiles.",
-  },
-  {
-    icon: BellRing,
-    title: "Direct connection",
-    body: "When a buyer saves a product or sends an enquiry, the artisan is notified instantly — no middleman.",
-  },
-];
+  { icon: Camera, title: "about.s1t", body: "about.s1b" },
+  { icon: Sparkles, title: "about.s2t", body: "about.s2b" },
+  { icon: IndianRupee, title: "about.s3t", body: "about.s3b" },
+  { icon: Languages, title: "about.s4t", body: "about.s4b" },
+  { icon: Store, title: "about.s5t", body: "about.s5b" },
+  { icon: BellRing, title: "about.s6t", body: "about.s6b" },
+] as const;
 
 function AboutPage() {
+  const { t } = useLanguage();
+
   return (
     <PageShell>
       <header className="max-w-2xl">
-        <h1 className="text-4xl font-semibold">How ArtisanLink works</h1>
-        <p className="text-muted-foreground mt-3 text-lg">
-          Most artisans cannot write English product pages, do not know marketplace categories and
-          have no reference for pricing. ArtisanLink removes all three barriers with a single
-          photograph.
-        </p>
+        <h1 className="text-4xl font-semibold">{t("about.title")}</h1>
+        <p className="text-muted-foreground mt-3 text-lg">{t("about.lead")}</p>
       </header>
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -73,22 +48,22 @@ function AboutPage() {
             <span className="bg-gradient-warm text-primary-foreground flex h-11 w-11 items-center justify-center rounded-xl">
               <step.icon className="h-5 w-5" aria-hidden />
             </span>
-            <p className="text-muted-foreground mt-4 text-xs font-medium">STEP {index + 1}</p>
-            <h2 className="mt-1 text-lg font-semibold">{step.title}</h2>
-            <p className="text-muted-foreground mt-2 text-sm">{step.body}</p>
+            <p className="text-muted-foreground mt-4 text-xs font-medium">
+              {t("about.step")} {index + 1}
+            </p>
+            <h2 className="mt-1 text-lg font-semibold">{t(step.title)}</h2>
+            <p className="text-muted-foreground mt-2 text-sm">{t(step.body)}</p>
           </article>
         ))}
       </div>
 
       <section className="card-surface mt-10 flex flex-col items-start gap-4 p-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold">Ready to list your craft?</h2>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Create a free account, upload one photo, and review what the AI writes for you.
-          </p>
+          <h2 className="text-2xl font-semibold">{t("about.ctaTitle")}</h2>
+          <p className="text-muted-foreground mt-1 text-sm">{t("about.ctaBody")}</p>
         </div>
         <Button asChild size="lg" className="bg-gradient-warm border-0">
-          <Link to="/auth">Get started</Link>
+          <Link to="/auth">{t("about.ctaBtn")}</Link>
         </Button>
       </section>
     </PageShell>

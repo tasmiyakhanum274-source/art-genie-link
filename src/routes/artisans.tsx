@@ -4,6 +4,7 @@ import { MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageShell } from "@/components/PageShell";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/lib/i18n";
 import type { Profile } from "@/lib/artisan";
 
 export const Route = createFileRoute("/artisans")({
@@ -26,6 +27,8 @@ export const Route = createFileRoute("/artisans")({
 });
 
 function ArtisansPage() {
+  const { t } = useLanguage();
+
   const { data, isLoading } = useQuery({
     queryKey: ["artisan-directory"],
     queryFn: async () => {
@@ -42,10 +45,8 @@ function ArtisansPage() {
 
   return (
     <PageShell>
-      <h1 className="text-3xl font-semibold">Meet the artisans</h1>
-      <p className="text-muted-foreground mt-2">
-        The makers behind every listing, with their craft speciality and region.
-      </p>
+      <h1 className="text-3xl font-semibold">{t("artisans.title")}</h1>
+      <p className="text-muted-foreground mt-2">{t("artisans.lead")}</p>
 
       {isLoading ? (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -55,7 +56,7 @@ function ArtisansPage() {
         </div>
       ) : (data?.length ?? 0) === 0 ? (
         <p className="card-surface text-muted-foreground mt-8 p-10 text-center">
-          No artisan profiles yet.
+          {t("artisans.empty")}
         </p>
       ) : (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -72,10 +73,10 @@ function ArtisansPage() {
                 </span>
                 <div className="min-w-0">
                   <h2 className="truncate text-base font-semibold">
-                    {artisan.full_name || "Artisan"}
+                    {artisan.full_name || t("artisans.defaultName")}
                   </h2>
                   <p className="text-muted-foreground truncate text-sm">
-                    {artisan.craft_specialty || "Handicraft maker"}
+                    {artisan.craft_specialty || t("artisans.defaultCraft")}
                   </p>
                 </div>
               </div>

@@ -6,6 +6,7 @@ import { PageShell } from "@/components/PageShell";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/lib/i18n";
 import type { Product, Profile } from "@/lib/artisan";
 
 export const Route = createFileRoute("/artisan/$id")({
@@ -28,6 +29,8 @@ export const Route = createFileRoute("/artisan/$id")({
 
 function ArtisanProfilePage() {
   const { id } = Route.useParams();
+  const { t } = useLanguage();
+
 
   const { data, isLoading } = useQuery({
     queryKey: ["artisan-profile", id],
@@ -60,9 +63,9 @@ function ArtisanProfilePage() {
     return (
       <PageShell>
         <div className="card-surface mx-auto max-w-md p-10 text-center">
-          <h1 className="text-2xl font-semibold">Artisan not found</h1>
+          <h1 className="text-2xl font-semibold">{t("artisans.notFound")}</h1>
           <Button asChild className="mt-6">
-            <Link to="/artisans">Browse all artisans</Link>
+            <Link to="/artisans">{t("artisans.browseAll")}</Link>
           </Button>
         </div>
       </PageShell>
@@ -76,7 +79,7 @@ function ArtisanProfilePage() {
       <section className="card-surface p-6 sm:p-8">
         <h1 className="text-3xl font-semibold">{profile.full_name}</h1>
         <p className="text-muted-foreground mt-1">
-          {profile.craft_specialty ?? "Handicraft artisan"}
+          {profile.craft_specialty ?? t("artisans.defaultCraft")}
         </p>
         <div className="text-muted-foreground mt-3 flex flex-wrap gap-4 text-sm">
           {profile.location && (
@@ -93,10 +96,12 @@ function ArtisanProfilePage() {
         {profile.bio && <p className="mt-4 max-w-3xl text-sm leading-relaxed">{profile.bio}</p>}
       </section>
 
-      <h2 className="mt-10 text-xl font-semibold">Products by {profile.full_name}</h2>
+      <h2 className="mt-10 text-xl font-semibold">
+        {t("artisans.productsBy")} {profile.full_name}
+      </h2>
       {products.length === 0 ? (
         <p className="card-surface text-muted-foreground mt-4 p-10 text-center">
-          No published products yet.
+          {t("artisans.noProducts")}
         </p>
       ) : (
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
