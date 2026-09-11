@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/lib/i18n";
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -8,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 /** Client-side gate: shows a sign-in prompt when there is no session. */
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
+  const { t } = useLanguage();
 
   if (loading) {
     return (
@@ -24,12 +26,10 @@ export function RequireAuth({ children }: { children: ReactNode }) {
     return (
       <PageShell>
         <div className="card-surface mx-auto max-w-md p-10 text-center">
-          <h1 className="text-2xl font-semibold">Please sign in</h1>
-          <p className="text-muted-foreground mt-2 text-sm">
-            You need an account to open this page.
-          </p>
+          <h1 className="text-2xl font-semibold">{t("gate.title")}</h1>
+          <p className="text-muted-foreground mt-2 text-sm">{t("gate.body")}</p>
           <Button asChild className="mt-6">
-            <Link to="/auth">Sign in or create an account</Link>
+            <Link to="/auth">{t("gate.cta")}</Link>
           </Button>
         </div>
       </PageShell>

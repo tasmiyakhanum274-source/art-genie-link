@@ -5,11 +5,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/ProductCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { recommendRelated } from "@/lib/recommend.functions";
+import { useLanguage } from "@/lib/i18n";
 import type { Product } from "@/lib/artisan";
 
 /** AI-ranked "You may also like" strip shown under a product. */
 export function RelatedProducts({ product }: { product: Product }) {
   const rank = useServerFn(recommendRelated);
+  const { t } = useLanguage();
 
   const { data, isLoading } = useQuery({
     queryKey: ["related", product.id],
@@ -53,11 +55,9 @@ export function RelatedProducts({ product }: { product: Product }) {
   return (
     <section className="mt-14">
       <h2 className="inline-flex items-center gap-2 text-xl font-semibold">
-        <Sparkles className="text-primary h-5 w-5" aria-hidden /> You may also like
+        <Sparkles className="text-primary h-5 w-5" aria-hidden /> {t("related.title")}
       </h2>
-      <p className="text-muted-foreground mt-1 text-sm">
-        Picked by AI from crafts with a similar technique, material and price.
-      </p>
+      <p className="text-muted-foreground mt-1 text-sm">{t("related.subtitle")}</p>
       <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => (
