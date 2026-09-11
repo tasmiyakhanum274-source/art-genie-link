@@ -7,6 +7,7 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/lib/i18n";
 
 export const Route = createFileRoute("/notifications")({
   ssr: false,
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/notifications")({
 
 function NotificationsPage() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -58,9 +60,9 @@ function NotificationsPage() {
   return (
     <PageShell>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold">Notifications</h1>
+        <h1 className="text-3xl font-semibold">{t("notif.title")}</h1>
         <Button variant="outline" size="sm" onClick={() => void markAllRead()}>
-          Mark all as read
+          {t("notif.markAll")}
         </Button>
       </div>
 
@@ -72,7 +74,7 @@ function NotificationsPage() {
         </div>
       ) : (data?.length ?? 0) === 0 ? (
         <p className="card-surface text-muted-foreground mt-8 p-10 text-center">
-          Nothing here yet. Buyer activity will show up on this page.
+          {t("notif.empty")}
         </p>
       ) : (
         <div className="mt-8 space-y-3">
