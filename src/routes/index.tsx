@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useLanguage } from "@/lib/i18n";
 import { CATEGORIES, type Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/")({
@@ -38,6 +39,7 @@ export const Route = createFileRoute("/")({
 });
 
 function MarketplacePage() {
+  const { t } = useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<"new" | "price-low" | "price-high">("new");
@@ -101,6 +103,12 @@ function MarketplacePage() {
     setMaxPrice("");
   };
 
+  const sortOptions = [
+    ["new", t("home.sortNew")],
+    ["price-low", t("home.sortLow")],
+    ["price-high", t("home.sortHigh")],
+  ] as const;
+
   return (
     <PageShell wide>
       {/* Hero */}
@@ -108,33 +116,29 @@ function MarketplacePage() {
         <div className="bg-gradient-warm pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full opacity-20 blur-3xl" />
         <div className="relative max-w-2xl">
           <span className="bg-secondary text-secondary-foreground inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden /> AI driven market linkage
+            <Sparkles className="h-3.5 w-3.5" aria-hidden /> {t("home.badge")}
           </span>
           <h1 className="mt-4 text-4xl leading-tight font-semibold sm:text-5xl">
-            Handmade by artisans. <span className="text-gradient-warm">Catalogued by AI.</span>
+            {t("home.titleA")} <span className="text-gradient-warm">{t("home.titleB")}</span>
           </h1>
-          <p className="text-muted-foreground mt-4 text-base sm:text-lg">
-            Artisans photograph their craft. AI writes the listing, picks the category, suggests a
-            fair price and translates everything into Hindi, Kannada and Tamil. Buyers discover and
-            contact makers directly.
-          </p>
+          <p className="text-muted-foreground mt-4 text-base sm:text-lg">{t("home.lead")}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-gradient-warm border-0">
-              <Link to="/upload">Start selling</Link>
+              <Link to="/upload">{t("home.startSelling")}</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link to="/about">How it works</Link>
+              <Link to="/about">{t("home.howItWorks")}</Link>
             </Button>
           </div>
           <div className="text-muted-foreground mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
             <span className="inline-flex items-center gap-2">
-              <Sparkles className="text-primary h-4 w-4" aria-hidden /> Photo to listing in seconds
+              <Sparkles className="text-primary h-4 w-4" aria-hidden /> {t("home.f1")}
             </span>
             <span className="inline-flex items-center gap-2">
-              <Languages className="text-primary h-4 w-4" aria-hidden /> 4 languages
+              <Languages className="text-primary h-4 w-4" aria-hidden /> {t("home.f2")}
             </span>
             <span className="inline-flex items-center gap-2">
-              <IndianRupee className="text-primary h-4 w-4" aria-hidden /> Fair price guidance
+              <IndianRupee className="text-primary h-4 w-4" aria-hidden /> {t("home.f3")}
             </span>
           </div>
         </div>
@@ -151,19 +155,13 @@ function MarketplacePage() {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search crafts, materials, regions…"
+              placeholder={t("home.searchPlaceholder")}
               className="h-12 rounded-xl pl-9"
-              aria-label="Search products"
+              aria-label={t("home.searchLabel")}
             />
           </div>
           <div className="flex gap-2">
-            {(
-              [
-                ["new", "Newest"],
-                ["price-low", "Price ↑"],
-                ["price-high", "Price ↓"],
-              ] as const
-            ).map(([value, label]) => (
+            {sortOptions.map(([value, label]) => (
               <Button
                 key={value}
                 variant={sort === value ? "default" : "outline"}
@@ -183,7 +181,7 @@ function MarketplacePage() {
             onClick={() => setCategory(null)}
             className="rounded-full"
           >
-            All crafts
+            {t("home.allCrafts")}
           </Button>
           {CATEGORIES.map((c) => (
             <Button
@@ -200,32 +198,32 @@ function MarketplacePage() {
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground text-sm">Price ₹</span>
+            <span className="text-muted-foreground text-sm">{t("home.price")}</span>
             <Input
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value.replace(/[^\d]/g, ""))}
               inputMode="numeric"
-              placeholder="Min"
-              aria-label="Minimum price in rupees"
+              placeholder={t("home.min")}
+              aria-label={t("home.min")}
               className="h-10 w-24 rounded-xl"
             />
-            <span className="text-muted-foreground text-sm">to ₹</span>
+            <span className="text-muted-foreground text-sm">{t("home.to")}</span>
             <Input
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value.replace(/[^\d]/g, ""))}
               inputMode="numeric"
-              placeholder="Max"
-              aria-label="Maximum price in rupees"
+              placeholder={t("home.max")}
+              aria-label={t("home.max")}
               className="h-10 w-24 rounded-xl"
             />
           </div>
 
           <Select value={location} onValueChange={setLocation}>
-            <SelectTrigger className="h-10 w-56 rounded-xl" aria-label="Filter by location">
-              <SelectValue placeholder="All locations" />
+            <SelectTrigger className="h-10 w-56 rounded-xl" aria-label={t("home.allLocations")}>
+              <SelectValue placeholder={t("home.allLocations")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All locations</SelectItem>
+              <SelectItem value="all">{t("home.allLocations")}</SelectItem>
               {locations.map((loc) => (
                 <SelectItem key={loc} value={loc}>
                   {loc}
@@ -236,11 +234,11 @@ function MarketplacePage() {
 
           {filtersActive && (
             <Button variant="ghost" size="sm" onClick={clearFilters} className="rounded-full">
-              Clear filters
+              {t("home.clearFilters")}
             </Button>
           )}
           <span className="text-muted-foreground ml-auto text-sm">
-            {filtered.length} {filtered.length === 1 ? "product" : "products"}
+            {filtered.length} {filtered.length === 1 ? t("home.productOne") : t("home.products")}
           </span>
         </div>
       </section>
@@ -256,13 +254,10 @@ function MarketplacePage() {
         ) : filtered.length === 0 ? (
           <div className="card-surface flex flex-col items-center gap-3 p-14 text-center">
             <Store className="text-muted-foreground h-10 w-10" aria-hidden />
-            <h2 className="text-lg font-semibold">No products yet</h2>
-            <p className="text-muted-foreground max-w-sm text-sm">
-              Be the first artisan here — upload one photo and AI will build the whole listing for
-              you.
-            </p>
+            <h2 className="text-lg font-semibold">{t("home.emptyTitle")}</h2>
+            <p className="text-muted-foreground max-w-sm text-sm">{t("home.emptyBody")}</p>
             <Button asChild className="bg-gradient-warm mt-2 border-0">
-              <Link to="/upload">Add your first product</Link>
+              <Link to="/upload">{t("home.emptyCta")}</Link>
             </Button>
           </div>
         ) : (

@@ -7,6 +7,7 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/lib/i18n";
 import type { Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/saved")({
@@ -28,6 +29,7 @@ export const Route = createFileRoute("/saved")({
 
 function SavedPage() {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   const { data, isLoading } = useQuery({
     queryKey: ["saved-products", user?.id],
@@ -48,7 +50,7 @@ function SavedPage() {
 
   return (
     <PageShell wide>
-      <h1 className="text-3xl font-semibold">Saved products</h1>
+      <h1 className="text-3xl font-semibold">{t("saved.title")}</h1>
 
       {isLoading ? (
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -58,9 +60,9 @@ function SavedPage() {
         </div>
       ) : (data?.length ?? 0) === 0 ? (
         <div className="card-surface mt-8 p-10 text-center">
-          <p className="text-muted-foreground">You have not saved anything yet.</p>
+          <p className="text-muted-foreground">{t("saved.empty")}</p>
           <Button asChild className="mt-4">
-            <Link to="/">Browse the marketplace</Link>
+            <Link to="/">{t("saved.browse")}</Link>
           </Button>
         </div>
       ) : (
