@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/lib/i18n";
 import type { Product } from "@/lib/artisan";
 
 export const Route = createFileRoute("/edit/$id")({
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/edit/$id")({
 function EditProductPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [form, setForm] = useState<Product | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -76,7 +78,7 @@ function EditProductPage() {
       toast.error(error.message);
       return;
     }
-    toast.success("Changes saved");
+    toast.success(t("edit.saved"));
     void navigate({ to: "/my-products" });
   };
 
@@ -90,14 +92,14 @@ function EditProductPage() {
 
   return (
     <PageShell>
-      <h1 className="text-3xl font-semibold">Edit product</h1>
+      <h1 className="text-3xl font-semibold">{t("edit.title")}</h1>
       <div className="card-surface mt-6 space-y-4 p-6">
         <div className="space-y-2">
-          <Label htmlFor="title">Product name</Label>
+          <Label htmlFor="title">{t("upload.name")}</Label>
           <Input id="title" value={form.title} onChange={(e) => set("title", e.target.value)} />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="description">{t("upload.description")}</Label>
           <Textarea
             id="description"
             rows={6}
@@ -107,7 +109,7 @@ function EditProductPage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category">{t("upload.category")}</Label>
             <Input
               id="category"
               value={form.category}
@@ -115,7 +117,7 @@ function EditProductPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="craft">Craft type</Label>
+            <Label htmlFor="craft">{t("upload.craft")}</Label>
             <Input
               id="craft"
               value={form.craft_type ?? ""}
@@ -123,7 +125,7 @@ function EditProductPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pmin">Lowest price (₹)</Label>
+            <Label htmlFor="pmin">{t("upload.priceMin")}</Label>
             <Input
               id="pmin"
               type="number"
@@ -132,7 +134,7 @@ function EditProductPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pmax">Highest price (₹)</Label>
+            <Label htmlFor="pmax">{t("upload.priceMax")}</Label>
             <Input
               id="pmax"
               type="number"
@@ -142,27 +144,27 @@ function EditProductPage() {
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="tags">Search tags (comma separated)</Label>
+          <Label htmlFor="tags">{t("upload.tags")}</Label>
           <Input
             id="tags"
             value={form.tags.join(", ")}
             onChange={(e) =>
-              set("tags", e.target.value.split(",").map((t) => t.trim()).filter(Boolean))
+              set("tags", e.target.value.split(",").map((x) => x.trim()).filter(Boolean))
             }
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="materials">Materials (comma separated)</Label>
+          <Label htmlFor="materials">{t("upload.materials")}</Label>
           <Input
             id="materials"
             value={form.materials.join(", ")}
             onChange={(e) =>
-              set("materials", e.target.value.split(",").map((t) => t.trim()).filter(Boolean))
+              set("materials", e.target.value.split(",").map((x) => x.trim()).filter(Boolean))
             }
           />
         </div>
         <Button disabled={saving} onClick={() => void save()}>
-          {saving ? "Saving..." : "Save changes"}
+          {saving ? t("edit.saving") : t("edit.save")}
         </Button>
       </div>
     </PageShell>
